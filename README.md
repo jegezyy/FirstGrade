@@ -104,7 +104,7 @@ blog_posts
 
 | Роль | Технология | 
 |------|-----------|
-| **Fullstack Developer (Backend / Frontend) | Flask 2.0+, React 18 |
+| **Fullstack Developer (Backend / Frontend)** | Flask 2.0+, React 18 |
 | **Database** | PostgreSQL 18, FastAPI |
 
 

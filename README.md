@@ -112,5 +112,5 @@ blog_posts
 
 | Участник | Роль |
 |----------|------|
-| **Сережа Товмосаня (https://github.com/Jefe1-baby)** | Fullstack Developer (Backend / Frontend) |
+| **Сережа Товмосан (https://github.com/Jefe1-baby)** | Fullstack Developer (Backend / Frontend) |
 | **Дмитрий Дутченко (https://github.com/jegezy)** | Data Engineer |

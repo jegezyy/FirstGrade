@@ -89,7 +89,7 @@ API `/api/dashboard`:
 ### 🧪 API
 
 - `/api/about` — данные о проекте из JSON  
-- `/api/hash/<text>` — генерация hash + логирование  
+- `/api/hash/<text>` — генерация hash + логирование
 
 ---
 
@@ -139,8 +139,8 @@ created_at TEXT
 
 ## 🛠️ Технологический стек
 
-- **Backend:** Flask  
-- **База данных:** SQLite  
+- **Backend:** Flask, FastAPI  
+- **База данных:** SQLite(временно)  
 - **Аутентификация:** JWT  
 - **Шаблоны:** Jinja2  
 - **Безопасность:** werkzeug.security  
@@ -161,7 +161,7 @@ created_at TEXT
 
 ```bash
 pip install -r requirements.txt
-python app.py
+python main.py
 ```
 
 Открыть в браузере:
@@ -173,14 +173,13 @@ http://127.0.0.1:5000
 
 ## 👨‍💻 Автор
 
-- Сережа Товмосан
+- Дутченко Дмитрий FullStack Developer (main role) + Data Engineer (sub role) - teamlead
 
 ---
 
 ## 📈 Возможности для развития
 
-- Переход на PostgreSQL  
-- Разделение backend / frontend (React)  
+- Переход на PostgreSQL
 - Добавление изображений товаров  
 - Система отзывов  
 - Онлайн-оплата  

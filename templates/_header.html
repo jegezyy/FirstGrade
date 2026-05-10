@@ -1,0 +1,37 @@
+<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <div class="container d-flex flex-wrap align-items-center justify-content-between">
+       <a href="/" class="d-inline-flex align-items-center link-body-emphasis text-decoration-none gap-2">
+           <button id="themeToggle" class="btn btn-link fs-4" style="text-decoration: none;">🌙</button>
+        <img class="header__img" src="{{ url_for('static', filename='image/icon_512.png') }}" alt="icon_512">
+        <span class="fs-4 fw-bold">Первая Зачётка</span>
+        </a>
+
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="{{ url_for('index') }}" class="nav-link px-2 link-secondary">Каталог</a></li>
+            <li><a href="{{ url_for('state') }}" class="nav-link px-2">Статьи</a></li>
+            <li><a href="{{ url_for('api_about') }}" class="nav-link px-2">О нас</a></li>
+            {% if current_user and current_user['is_admin'] == 1 %}
+            <li><a href="{{ url_for('create') }}" class="nav-link px-2">Добавить товар</a></li>
+            {% endif %}
+            {% if current_user and current_user['is_admin'] != 1 %}
+            <li><a href="/orders" class="nav-link px-2">Мои заказы</a></li>
+            {% endif %}
+            {% if current_user and current_user['is_admin'] == 1 %}
+            <li><a href="/admin/orders" class="nav-link px-2">Заказы</a></li>
+            {% endif %}
+            {% if current_user and current_user['is_admin'] == 1 %}
+            <li><a href="/dashboard" class="nav-link px-2">Dashboard</a></li>
+            {% endif %}
+        </ul>
+
+        <div class="col-md-3 text-end">
+            {% if current_user %}
+            <a href="/profile/{{ current_user['username'] }}" class="btn btn-outline-secondary me-2">👤 {{ current_user['username'] }}</a>
+            <a href="/logout"><button class="btn btn-outline-primary me-2">Выйти</button></a>
+            {% else %}
+            <a href="/login"><button class="btn btn-outline-primary me-2">Войти</button></a>
+            <a href="/register"><button class="btn btn-primary me-2">Зарегистрироваться</button></a>
+            {% endif %}
+        </div>
+    </div>
+</header>

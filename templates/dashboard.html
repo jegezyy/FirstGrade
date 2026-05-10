@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block body %}
+<div class="container" style="margin-top: 30px;" xmlns="http://www.w3.org/1999/html">
+    <h1><strong>Dashboard</strong></h1>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+                <h5><strong>Заказы по статусу</strong></h5>
+                <canvas id="ordersStatusChart"></canvas>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+                <h5><strong>Товары по типу</strong></h5>
+                <canvas id="itemsTypeChart"></canvas>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+                <h5><strong>Заказы по дням</strong></h5>
+                <canvas id="ordersByDateChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src=" https://cdn.jsdelivr.net/npm/chart.js "></script>
+<script>
+    fetch('/api/dashboard')
+        .then(res => res.json())
+        .then(data => {
+            new Chart(document.getElementById('ordersStatusChart'), {
+                type: 'pie',
+                data: {
+                    labels: data.orders_by_status.map(r => r.status),
+                    datasets: [{
+                        data: data.orders_by_status.map(r => r.count),
+                        backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc']
+                    }]
+                }
+            });
+
+            new Chart(document.getElementById('itemsTypeChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: data.items_by_type.map(r => r.type),
+                    datasets: [{
+                        data: data.items_by_type.map(r => r.count),
+                        backgroundColor: ['#f6c23e', '#e74a3b', '#858796']
+                    }]
+                }
+            });
+
+            new Chart(document.getElementById('ordersByDateChart'), {
+                type: 'line',
+                data: {
+                    labels: data.orders_by_date.map(r => r.date),
+                    datasets: [{
+                        label: 'Заказы',
+                        data: data.orders_by_date.map(r => r.count),
+                        borderColor: '#4e73df',
+                        fill: false
+                    }]
+                }
+            });
+        });
+</script>
+{% endblock %}

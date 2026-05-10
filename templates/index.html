@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Первая зачетка
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  {% if request.args.get('error') == 'already_bought' %}
+  <div class="alert alert-warning">Вы уже купили этот товар</div>
+  {% endif %}
+  <div class="d-flex justify-content-end mb-3">
+    <div class="dropdown">
+      <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        Фильтр
+      </button>
+      <div class="dropdown-menu p-3" style="min-width: 250px;">
+        <form method="get">
+          <div class="mb-2">
+            <label class="form-label small">Тип</label>
+            <select name="type" class="form-select form-select-sm">
+              <option value="">Все типы</option>
+              <option value="Ноутбук">Ноутбук</option>
+              <option value="Телефон">Телефон</option>
+              <option value="Планшет">Планшет</option>
+            </select>
+          </div>
+          <div class="mb-2">
+            <label class="form-label small">Состояние</label>
+            <select name="condition" class="form-select form-select-sm">
+              <option value="">Любое</option>
+              <option value="Новый">Новый</option>
+              <option value="Б/У">Б/У</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label small">Цена</label>
+            <select name="sort" class="form-select form-select-sm">
+              <option value="price_asc">По возрастанию</option>
+              <option value="price_desc">По убыванию</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm w-100">Применить</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+    {% for el in data %}
+    <div class="col">
+      <div class="card mb-4 rounded-3 shadow-sm">
+        <div class="card-header py-3">
+          <h4 class="my-0 fw-normal">{{ el.title }}</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title">{{ el.price }}<small class="card-title pricing-card-title">₽</small></h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>{{ el.description }}</li>
+            <li>{{ el.condition }}</li>
+            <li>{{ el.number }}</li>
+          </ul>
+          {% if current_user %}
+          <a href="/buy/{{ el.id }}" class="w-100 btn btn-lg btn-outline-primary">Купить</a>
+          {% else %}
+          <a href="/login" class="w-100 btn btn-lg btn-outline-primary">Купить</a>
+          {% endif %}
+          {% if current_user and current_user['is_admin'] == 1 %}
+          <a href="/edit/{{ el.id }}" class="w-100 btn btn-lg btn-outline-warning mt-2">Редактировать</a>
+          <a href="/delete/{{ el.id }}" class="w-100 btn btn-lg btn-outline-danger mt-2">Удалить</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

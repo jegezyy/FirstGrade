@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Мои заказы
+{% endblock %}
+
+{% block body %}
+<div class="container" style="margin-top: 30px;">
+    <h1>Мои заказы</h1>
+    {% if orders %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Товар</th>
+                <th>Цена</th>
+                <th>Статус</th>
+                <th>Дата</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order['id'] }}</td>
+                <td>{{ order['title'] }}</td>
+                <td>{{ order['price'] }}₽</td>
+                <td>{% if order['status'] == 'pending' %}В обработке{% elif order['status'] == 'paid' %}Оплачен{% elif order['status'] == 'delivered' %}Доставлен{% else %}{{ order['status'] }}{% endif %}</td>
+                <td>{{ order['created_at'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>У вас пока нет заказов.</p>
+    {% endif %}
+</div>
+{% endblock %}

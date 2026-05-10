@@ -1,0 +1,32 @@
+{# jinja2: ignore-file[undefined-variable] #}
+{% extends 'base.html' %}
+
+{% block title %}
+Редактирование товара
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Редактирование товара</h1>
+    <form method="post">
+        <input type="text" class="form-control" name="title" value="{{ item['title'] }}" placeholder="Введите название"><br>
+        <input type="number" class="form-control" name="price" value="{{ item['price'] }}" placeholder="Введите цену"><br>
+        <input type="text" class="form-control" name="description" value="{{ item['description'] }}" placeholder="Введите описание"><br>
+        <input type="tel" class="form-control" name="number" value="{{ item['number'] }}" placeholder="Введите номер телефона"><br>
+
+        <select class="form-control" name="type">
+            <option value="Ноутбук" {% if item ['type'] == 'Ноутбук' %} selected {% endif %}>Ноутбук</option>
+            <option value="Телефон" {% if item ['type'] == 'Телефон' %} selected {% endif %}>Телефон</option>
+            <option value="Планшет" {% if item ['type'] == 'Планшет' %} selected {% endif %}>Планшет</option>
+        </select><br>
+
+        <select class="form-control" name="condition">
+            <option value="Новый" {% if item ['condition'] == 'Новый' %} selected{% endif %}>Новый</option>
+            <option value="Б/У" {% if item ['condition'] == 'Б/У' %} selected{% endif %}>Б/У</option>
+        </select><br>
+
+        <button class="btn btn-success" type="submit">Сохранить</button>
+        <a href="/index" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}

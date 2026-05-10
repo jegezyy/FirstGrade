@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Профиль {{ user['username'] }}
+{% endblock %}
+
+{% block body %}
+<div class="container" style="max-width: 500px; margin-top: 50px;">
+    <h1>👤 {{ user['username'] }}</h1>
+    <hr>
+    <p><strong>Email:</strong> {{ user['email'] }}</p>
+    <p><strong>Дата регистрации:</strong> {{ user['created_at'] }}</p>
+
+    <p><strong>Роль:</strong> {% if user['is_admin'] == 1 %}Администратор{% else %}Пользователь{% endif %}</p>
+    <a href="/{{ user['username'] }}/refresh_token" class="btn btn-outline-primary">Обновить токен</a>
+</div>
+{% endblock %}

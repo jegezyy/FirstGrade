@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Товар
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <form method="post">
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+        <input type="text" class="form-control" name="title" id="title" placeholder="Введите название" required><br>
+        <input type="number" class="form-control" name="price" id="price" placeholder="Введите цену" required><br>
+        <input type="text" class="form-control" name="description" id="description" placeholder="Введите описание" required><br>
+        <input type="tel" class="form-control" name="number" id="number" placeholder="Введите номер телефона" required><br>
+
+        <select class="form-control" name="type">
+    <option value="Ноутбук">Ноутбук</option>
+    <option value="Телефон">Телефон</option>
+            <option value="Планшет">Планшет</option>
+</select><br>
+       <select class="form-control" name="condition">
+    <option value="Новый">Новый</option>
+    <option value="Б/У">Б/У</option>
+</select><br>
+        <button class="btn btn-success" type="submit">Добавить товар</button>
+    </form>
+</div>
+{% endblock %}

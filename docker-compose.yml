@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  master:
+    image: postgres:18
+    container_name: postgres_master
+    environment:
+      POSTGRES_PASSWORD: Idc77585850
+      POSTGRES_DB: market
+    ports:
+      - "5432:5432"
+    command: |
+      postgres
+      -c wal_level=replica
+      -c max_wal_senders=3
+      -c wal_keep_size=64
+
+  slave:
+    image: postgres:18
+    container_name: postgres_slave
+    environment:
+      POSTGRES_PASSWORD: Idc77585850
+      POSTGRES_DB: market
+    ports:
+      - "5433:5432"
+    depends_on:
+      - master
+
+
+#проверка на работоспособность "docker exec -it postgres_master psql -U postgres -c "SELECT * FROM pg_stat_replication;"
+#запуск Docker "docker-compose up -d"

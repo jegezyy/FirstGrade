@@ -22,10 +22,23 @@ DB_CONFIG = {
     'port': os.getenv('DB_PORT')
 }
 
+DB_SLAVE_CONFIG = {
+    'dbname': os.getenv('DB_SLAVE_NAME'),
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'host': os.getenv('DB_SLAVE_HOST'),
+    'port': os.getenv('DB_SLAVE_PORT')
+}
+
 
 def get_db():
     conn = psycopg2.connect(**DB_CONFIG)
     conn.autocommit = False
+    return conn
+
+
+def get_slave_db():
+    conn = psycopg2.connect(**DB_SLAVE_CONFIG)
     return conn
 
 
@@ -172,7 +185,7 @@ def index():
     elif sort == 'price_desc':
         sql += " ORDER BY price DESC"
 
-    conn = get_db()
+    conn = get_slave_db()
     cur = conn.cursor()
     cur.execute(sql, params)
     data = fetchall(cur)
@@ -361,7 +374,7 @@ def profile(username):
     token = request.cookies.get('jwt_token')
     data = jwt.decode(token, JWT_SECRET, algorithms=['HS256'])
 
-    conn = get_db()
+    conn = get_slave_db()
     cur = conn.cursor()
     cur.execute('SELECT * FROM "user" WHERE id = %s', (data['user_id'],))
     current = fetchone(cur)
@@ -425,7 +438,7 @@ def orders():
     token = request.cookies.get('jwt_token')
     data = jwt.decode(token, JWT_SECRET, algorithms=['HS256'])
 
-    conn = get_db()
+    conn = get_slave_db()
     cur = conn.cursor()
     cur.execute(
         "SELECT orders.id, item.title, item.price, orders.status, orders.created_at FROM orders JOIN item ON orders.item_id = item.id WHERE orders.user_id = %s",
@@ -440,7 +453,7 @@ def orders():
 @app.route('/admin/orders')
 @admin_required
 def admin_orders():
-    conn = get_db()
+    conn = get_slave_db()
     cur = conn.cursor()
     cur.execute(
         'SELECT orders.id, "user".username, item.title, orders.status, orders.created_at FROM orders JOIN "user" ON orders.user_id = "user".id JOIN item ON orders.item_id = item.id'
@@ -470,7 +483,7 @@ def dashboard():
 @app.route('/api/dashboard')
 @admin_required
 def api_dashboard():
-    conn = get_db()
+    conn = get_slave_db()
     cur = conn.cursor()
 
     cur.execute("SELECT status, COUNT(*) as count FROM orders GROUP BY status")

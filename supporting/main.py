@@ -8,6 +8,7 @@ load_dotenv(dotenv_path=os.path.join('..', '.env'))
 
 app = FastAPI()
 
+
 DB_CONFIG = {
     'dbname': os.getenv('DB_SLAVE_NAME'),
     'user': os.getenv('DB_USER'),

@@ -1,6 +1,0 @@
-.idea/
-.env
-__pycache__/
-*.pyc
-.venv/
-docker-compose.yml

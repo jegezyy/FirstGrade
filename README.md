@@ -122,7 +122,7 @@ price INTEGER
 type TEXT
 condition TEXT
 description TEXT
-number TEXT
+number_ TEXT
 status TEXT
 ```
 
